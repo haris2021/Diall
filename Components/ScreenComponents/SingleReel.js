@@ -1,64 +1,76 @@
-import React,{useRef, useState} from "react";
-import { StyleSheet, Text, View , Dimensions, TouchableOpacity} from 'react-native';
+import React, { useRef, useState } from "react";
+import { Dimensions, View, TouchableOpacity } from "react-native";
+import { Video } from "expo-av";
 
-import Video from 'react-native-video';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
-const SingleReel = ({item,index, currentIndex}) =>
-{
-    const windowWidth = Dimensions.get('window').width;
-    const windowHeight = Dimensions.get('window').height;
+const SingleReel = ({ item }) => {
 
+  const windowWidth = Dimensions.get("window").width;
+  const windowHeight = Dimensions.get("window").height;
 
-    const videoRef = useRef(null);
+  const onBuffer = buffer => {
+    console.log('buffring', buffer);
+  };
+  const onError = error => {
+    console.log('error', error);
+  };
 
-    const onBuffer = buffer => {
-      console.log('buffring', buffer);
-    };
-    const onError = error => {
-      console.log('error', error);
-    };
+  const videoRef = useRef(null);
 
-    
-    return(
+  const[play, setplay] = useState(true);
 
-        <View
-        
-        style={{width: windowWidth,
+  return (
+    <View
+      style={{
+        width: windowWidth,
         height: windowHeight,
-        position :'relative'
-        }}
+        position: "relative",
+      }}
+    >
+
+        <TouchableOpacity
+        onPress = { () => setplay(!play)}
         >
 
-            <TouchableOpacity style={{
-                                width: '100%',
-                                height: '100%',
-                                position: 'absolute'
-                            }}
-                            >
-        
                             <Video
-                            videoRef={videoRef}
-                            onBuffer={onBuffer}
-                            onError={onError}
-                            repeat={true}
-                            resizeMode="cover"
-                            source={{uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"}}
-                            style={{
-                                width: '100%',
-                                height: '100%',
-                                position: 'absolute'
-                            }}
+                                            ref={videoRef}
+                                            resizeMode="cover"
+                                            isLooping
+                                            onBuffer={onBuffer}
+                                            onError={onError}
+                                            shouldPlay = {play}
+                                            source={item.video}
+                                            style={{
+                                            width: windowWidth,
+                                            height: windowHeight,
+                                            position: "absolute",
+                                            }}
+                                        />
 
-                            />
-
-            </TouchableOpacity>
-
-
+        </TouchableOpacity>
+        
+        {!play && (
+        <View 
+          style={{
+            position: 'absolute',
+            top: windowWidth / 2.3,
+            left: windowWidth / 2.3,
+            padding: 10,
+            borderRadius: 10,
+            backgroundColor: 'rgba(52,52,52,0.1)',
+          }}
+        >
+          <Ionicons
+            name="md-pause"
+            size={32}
+            color="black"
+          />
         </View>
-
-    
-       
-    )
-}
+      )}
+                
+    </View>
+  );
+};
 
 export default SingleReel;

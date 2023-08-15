@@ -5,7 +5,7 @@ export const Video = [
         description : 'Travel'
     },
     {
-        video :require('../../RawVideo/Video1.mp4'),
+        video :require('../../RawVideo/Video2.mp4'),
         username : 'haris',
         description : 'Sea'
 
