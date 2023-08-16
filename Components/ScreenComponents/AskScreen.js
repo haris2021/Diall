@@ -6,7 +6,6 @@ const AskScreen = () => {
   return (
     <View>
      <Text>ask</Text>
-      <NavigationButtons />
     </View>
   );
 }

@@ -15,6 +15,10 @@ const NavButton = () => {
         title="Go to Reels"
         onPress={() => navigation.navigate('Reels')}
       />
+      <Button
+      title='Profile'
+      onPress={()=> navigation.navigate('Profile')}
+      />
     </View>
   );
 };
