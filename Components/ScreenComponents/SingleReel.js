@@ -4,7 +4,6 @@ import { Video } from "expo-av";
 
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-import ShareIcon from './ShareIcon'
 
 const SingleReel = ({ item }) => {
 
@@ -92,16 +91,16 @@ const SingleReel = ({ item }) => {
             <View style={{display: "flex", flexDirection: "row", justifyContent: 'space-between', alignItems: "center"}}>
 
                         <View style={{left:10}}>
-                          <Text style={{ color: 'red', fontSize: 19, marginHorizontal: 10 }}>
+                          <Text style={{ color: '#0000ff', fontSize: 19, marginHorizontal: 10, fontWeight: "800" }}>
                             @{item.username}
                             <Ionicons
                               name="ios-checkmark-circle-outline"
                               size={22}
-                              color="blue"
+                              color="lightblue"
                             />
                           </Text>
 
-                          <Text style={{ color: 'red', fontSize: 19, marginHorizontal: 10}}>
+                          <Text style={{ color: 'white', fontSize: 19, marginHorizontal: 10, fontWeight:"400"}}>
                             {item.description}
                           </Text>
 
