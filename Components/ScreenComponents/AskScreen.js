@@ -1,8 +1,11 @@
 import React,{useEffect, useState} from 'react';
-import { View, Text, TextInput, StyleSheet, ActivityIndicator, FlatList, Image} from 'react-native';
+import { View, Text, TextInput, StyleSheet, ActivityIndicator, FlatList, Image, TouchableOpacity} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import filter from "lodash.filter";
+
+import Ionicons from '@expo/vector-icons/Ionicons';
+
 
 const API_endpoint = "https://randomuser.me/api/?results=30";
 
@@ -10,11 +13,11 @@ const AskScreen = () => {
 
   const [SearchQuery, setSearchQuery] = useState("")
 
-
   const[isLoading, setisLoading] = useState(false);
   const[Data, setData] = useState([]);
   const[error,setError] = useState(null);
   const[fullData, setfullData] = useState("");
+  const[search, setsearch] = useState(false);
 
   useEffect( ()=>{
 
@@ -36,6 +39,7 @@ const AskScreen = () => {
       });
 
       setData(filtereddata);
+      setsearch(!search);
 
   }
 
@@ -97,16 +101,10 @@ const AskScreen = () => {
 
   }
 
-
-
   return (
 
-    // <View>
-    //   <Text>ask</Text>
-    // </View>
-
     <SafeAreaView  style={{flex:1, marginHorizontal:80, top:20}} >  
-    
+
         <TextInput
                         placeholder="Find a therapist.."
                         clearButtonMode = "always"
@@ -117,35 +115,55 @@ const AskScreen = () => {
                         onChangeText = { (query) => handleSearch(query)}     
         />
 
-        <FlatList 
-          data= {Data}
-          keyExtractor = {(item) => item.login.username} // use unqiue thing here
-          renderItem = {  ({item}) => (
+        { 
+          SearchQuery !== '' && 
+          <FlatList 
+                  data= {Data}
+                  keyExtractor = {(item) => item.login.username} // use unqiue thing here
+                  
+                  renderItem = {  ({item}) => (
 
-              <View style={styles.itemContainer}>
-
-                  <Image 
-                          source ={{uri :item.picture.thumbnail}}
-                          style={styles.image}
-                  />        
-              
-                  <View>
-
-                     <Text style={styles.textName}>{item.name.first}</Text>
-                      <Text style={styles.textEmail}>{item.email}</Text>
-
-                  </View>
+                      <View>
                       
-              </View>
+                        <View style={styles.itemContainer}>
 
-          ) }
+                                      <Image 
+                                                source ={{uri :item.picture.thumbnail}}
+                                                style={styles.image}
+                                      />   
 
-        />  
+                                      <Text style={styles.textName}>{item.name.first}</Text> 
+
+                                      <Ionicons
+                                              name="md-checkmark-circle-outline" // The name of the icon you want to use
+                                              size={17}     // Size of the icon
+                                              color="black" // Color of the icon
+                                              style={{ marginLeft:10}}
+                                        />
+                          </View>
+
+                          <View style={{flexDirection:'row',alignItems:'center'}}>
+
+                                      <Text style={styles.textEmail}>{item.email}</Text>
+
+                                      <View>
+                                                    <TouchableOpacity style={styles.button}>
+                                                      <Text style={styles.buttonText}>Ask</Text>
+                                                    </TouchableOpacity>
+
+                                      </View>
+
+                          </View>
+
+                      </View>
+
+                  ) }
+            />  
+        }
 
     </SafeAreaView>
   );
 }
-
 
 
 const styles = StyleSheet.create({
@@ -181,7 +199,19 @@ const styles = StyleSheet.create({
     marginLeft:10,
     marginRight:10,
     marginTop:20
-  }
+  },
+  
+  button: {
+    backgroundColor: 'lightgreen',
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    borderRadius: 13,
+    left:10
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+  },
 });
 
 export default AskScreen;
