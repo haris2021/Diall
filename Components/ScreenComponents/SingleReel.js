@@ -49,75 +49,81 @@ const SingleReel = ({ item }) => {
         position: "relative",
       }}
     >
-      <TouchableOpacity
-        onPress={() => setplay(!play)}
-      >
-        <Video
-          ref={videoRef}
-          resizeMode="cover"
-          isLooping
-          onBuffer={onBuffer}
-          onError={onError}
-          shouldPlay={play}
-          source={item.video}
-          style={{
-            width: "100%",
-            height: windowHeight-150
-          }}
-        />
+          <TouchableOpacity
+            onPress={() => setplay(!play)}
+          >
+            <Video
+              ref={videoRef}
+              resizeMode="cover"
+              isLooping
+              onBuffer={onBuffer}
+              onError={onError}
+              shouldPlay={play}
+              source={item.video}
+              style={{
+                width: "100%",
+                height: windowHeight-150
+              }}
+            />
 
-      </TouchableOpacity>
+          </TouchableOpacity>
 
-      {!play && (
-        <View
-          style={{
-            position: 'absolute',
-            top: "45%",
-            left: "50%",
-            borderRadius: 10,
-            backgroundColor: 'rgba(52,52,52,0.1)',
-          }}
-        >
-          <Ionicons
-            name="md-pause"
-            size={32}
-            color="black"
-          />
-        </View>
-      )
-      }
-          <View style={{ zIndex: 9999 , position: 'absolute', bottom: 220, left: 10}}>
-
-            <View style={{display: "flex", flexDirection: "row", justifyContent: 'space-between', alignItems: "center"}}>
-
-                        <View style={{left:10}}>
-                          <Text style={{ color: '#0000ff', fontSize: 19, marginHorizontal: 10, fontWeight: "800" }}>
-                            @{item.username}
-                            <Ionicons
-                              name="ios-checkmark-circle-outline"
-                              size={22}
-                              color="lightblue"
-                            />
-                          </Text>
-
-                          <Text style={{ color: 'white', fontSize: 19, marginHorizontal: 10, fontWeight:"400"}}>
-                            {item.description}
-                          </Text>
-
-                        </View>
-
-                        <View style={{position:'absolute' , left:360}}>
-                          <TouchableOpacity onPress={handleIconClick}>
-                            <Ionicons
-                              name="share" // The name of the icon you want to use
-                              size={30}     // Size of the icon
-                              color="white" // Color of the icon
-                              style={{}}
-                            />
-                          </TouchableOpacity>
-                        </View>
+          {!play && (
+            <View
+              style={{
+                position: 'absolute',
+                top: "45%",
+                left: "50%",
+                borderRadius: 10,
+                backgroundColor: 'rgba(52,52,52,0.1)',
+              }}
+            >
+              <Ionicons
+                name="md-pause"
+                size={32}
+                color="black"
+              />
             </View>
+          )
+          }
 
+          <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', bottom: 100}}>
+
+                  <View>
+
+                          <View style={{display:'flex', flexDirection:'row', left:25}}>
+
+                                <Text style={{fontSize:19, color:'blue', fontWeight:'bold'}}>@ {item.username}</Text>
+                                <Ionicons
+                                      name="ios-checkmark-circle-outline"
+                                      size={19}
+                                      color="lightblue"
+                                      style={{left:10}}
+                                 />
+
+
+                          </View>
+
+                          <View>
+
+                                <Text style={{fontSize:17, left:25, color:'white'}}> {item.description}</Text>
+
+                          </View>
+
+                  </View>
+
+                  <View style={{position:'absolute', right:10}}>
+
+                              <TouchableOpacity onPress={handleIconClick}>
+
+                                    <Ionicons
+                                      name="share" // The name of the icon you want to use
+                                      size={30}     // Size of the icon
+                                      color="white" // Color of the icon
+                                    />
+                              </TouchableOpacity>
+
+                   </View>
           </View>
           
     </View>
