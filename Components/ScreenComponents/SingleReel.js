@@ -120,7 +120,7 @@ const SingleReel = ({ item }) => {
 
           <View style={{}}>
             <Progress.Bar
-              progress={0.3}
+              progress={0.5}
               width={440}
               style={{
                 justifyContent: "flex-start",
