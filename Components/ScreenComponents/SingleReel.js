@@ -2,6 +2,8 @@ import React, { useRef, useState } from "react";
 import { Text, Dimensions, View, TouchableOpacity, Share } from "react-native";
 import { Video } from "expo-av";
 
+import * as Progress from "react-native-progress";
+
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 const SingleReel = ({ item }) => {
@@ -75,44 +77,59 @@ const SingleReel = ({ item }) => {
         </View>
       )}
 
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          bottom: 100,
-        }}
-      >
-        <View>
-          <View style={{ display: "flex", flexDirection: "row", left: 25 }}>
-            <Text style={{ fontSize: 19, color: "blue", fontWeight: "bold" }}>
-              @ {item.username}
-            </Text>
-            <Ionicons
-              name="ios-checkmark-circle-outline"
-              size={19}
-              color="lightblue"
-              style={{ left: 10 }}
-            />
-          </View>
-
+      <View>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            bottom: 100,
+          }}
+        >
           <View>
-            <Text style={{ fontSize: 17, left: 25, color: "white" }}>
-              {" "}
-              {item.description}
-            </Text>
-          </View>
-        </View>
+            <View style={{ display: "flex", flexDirection: "row", left: 25 }}>
+              <Text style={{ fontSize: 19, color: "blue", fontWeight: "bold" }}>
+                @ {item.username}
+              </Text>
+              <Ionicons
+                name="ios-checkmark-circle-outline"
+                size={19}
+                color="lightblue"
+                style={{ left: 10 }}
+              />
+            </View>
 
-        <View style={{ position: "absolute", right: 10 }}>
-          <TouchableOpacity onPress={handleIconClick}>
-            <Ionicons
-              name="share" // The name of the icon you want to use
-              size={30} // Size of the icon
-              color="white" // Color of the icon
+            <View>
+              <Text style={{ fontSize: 17, left: 25, color: "white" }}>
+                {" "}
+                {item.description}
+              </Text>
+            </View>
+          </View>
+
+          <View style={{ position: "absolute", right: 10 }}>
+            <TouchableOpacity onPress={handleIconClick}>
+              <Ionicons
+                name="share" // The name of the icon you want to use
+                size={30} // Size of the icon
+                color="white" // Color of the icon
+              />
+            </TouchableOpacity>
+          </View>
+
+          <View style={{}}>
+            <Progress.Bar
+              progress={0.3}
+              width={440}
+              style={{
+                justifyContent: "flex-start",
+                display: "flex",
+                marginTop: 81,
+                marginLeft: -70, // wrong
+              }}
             />
-          </TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>
