@@ -24,7 +24,7 @@ const ReelsComponent = () => {
           <SingleReel
             item={item}
             index={index}
-            StyleSheet={{ width: "100% ", asepectRatio: 1 }}
+            style={{ width: "100%", aspectRatio: 1 }}
           />
         )}
         keyExtractor={(item, index) => index}

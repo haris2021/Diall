@@ -31,6 +31,8 @@ const SearchScreen = () => {
   const [error, setError] = useState(null);
   const [fullData, setfullData] = useState("");
 
+  const [keyboardStatus, setKeyboardStatus] = useState("");
+
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -105,20 +107,17 @@ const SearchScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, marginHorizontal: 40, top: 20 }}>
-      <KeyboardAvoidingView>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <TextInput
-            placeholder="Find a therapist.."
-            clearButtonMode="always"
-            autoCapitalize="none"
-            autoCorrect={false}
-            autoFocus={true}
-            style={styles.searchbox}
-            value={SearchQuery}
-            onChangeText={(query) => handleSearch(query)}
-          />
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
+      <TextInput
+        placeholder="Find a therapist.."
+        clearButtonMode="always"
+        autoCapitalize="none"
+        autoCorrect={false}
+        autoFocus={true}
+        style={styles.searchbox}
+        value={SearchQuery}
+        onSubmitEditing={Keyboard.dismiss}
+        onChangeText={(query) => handleSearch(query)}
+      />
 
       {SearchQuery !== "" && Data.length > 0 && (
         <FlatList
