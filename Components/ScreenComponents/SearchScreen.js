@@ -4,15 +4,20 @@ import {
   Text,
   TextInput,
   StyleSheet,
+  KeyboardAvoidingView,
   ActivityIndicator,
   FlatList,
   Image,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
   Share,
+  Button,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import filter from "lodash.filter";
+import { useNavigation } from "@react-navigation/native";
 
 import Ionicons from "@expo/vector-icons/Ionicons";
 
@@ -26,6 +31,8 @@ const SearchScreen = () => {
   const [error, setError] = useState(null);
   const [fullData, setfullData] = useState("");
 
+  const navigation = useNavigation();
+
   useEffect(() => {
     setisLoading(true);
     fetchData(API_endpoint);
@@ -33,22 +40,11 @@ const SearchScreen = () => {
 
   const handleSearch = (query) => {
     setSearchQuery(query);
-    console.log(query + " ");
     const formattedquery = query.toLowerCase();
-
     const filtereddata = filter(fullData, (user) => {
       return contains(user, formattedquery);
     });
-
-    filtereddata.forEach((user, index) => {
-      console.log(`User ${index + 1}:`);
-      console.log("Name:", user.name);
-      console.log("Email:", user.email);
-      // Add more properties you want to log
-    });
-
     setData(filtereddata);
-    console.log("Setting data inside handle search " + Data.length);
   };
 
   const contains = ({ name, email }, query) => {
@@ -109,16 +105,20 @@ const SearchScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, marginHorizontal: 40, top: 20 }}>
-      <TextInput
-        placeholder="Find a therapist.."
-        clearButtonMode="always"
-        autoCapitalize="none"
-        autoCorrect={false}
-        autoFocus={true}
-        style={styles.searchbox}
-        value={SearchQuery}
-        onChangeText={(query) => handleSearch(query)}
-      />
+      <KeyboardAvoidingView>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <TextInput
+            placeholder="Find a therapist.."
+            clearButtonMode="always"
+            autoCapitalize="none"
+            autoCorrect={false}
+            autoFocus={true}
+            style={styles.searchbox}
+            value={SearchQuery}
+            onChangeText={(query) => handleSearch(query)}
+          />
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
 
       {SearchQuery !== "" && Data.length > 0 && (
         <FlatList
@@ -168,14 +168,18 @@ const SearchScreen = () => {
                 }}
               >
                 <TouchableOpacity style={styles.button}>
-                  <Text style={styles.buttonText}>Ask</Text>
+                  {/* <Text style={styles.buttonText}>Ask</Text> */}
+                  <Button
+                    title="Ask"
+                    onPress={() => navigation.navigate("AskScreen")}
+                    style={styles.button}
+                  />
                 </TouchableOpacity>
               </View>
             </View>
           )}
         />
       )}
-
       {/* Display this view when search result is empty */}
       {Data.length === 0 && (
         <View style={{ display: "flex", alignItems: "center", top: "10%" }}>
@@ -245,6 +249,8 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 18,
     borderRadius: 13,
+    width: 80,
+    height: 45,
   },
   buttonText: {
     color: "white",
