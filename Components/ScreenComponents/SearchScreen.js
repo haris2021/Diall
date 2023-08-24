@@ -107,17 +107,20 @@ const SearchScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, marginHorizontal: 40, top: 20 }}>
-      <TextInput
-        placeholder="Find a therapist.."
-        clearButtonMode="always"
-        autoCapitalize="none"
-        autoCorrect={false}
-        autoFocus={true}
-        style={styles.searchbox}
-        value={SearchQuery}
-        onSubmitEditing={Keyboard.dismiss}
-        onChangeText={(query) => handleSearch(query)}
-      />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <TextInput
+          placeholder="Find a therapist.."
+          clearButtonMode="always"
+          autoCapitalize="none"
+          autoCorrect={false}
+          autoFocus={true}
+          style={styles.searchbox}
+          value={SearchQuery}
+          onChangeText={(query) => handleSearch(query)}
+        />
+      </KeyboardAvoidingView>
 
       {SearchQuery !== "" && Data.length > 0 && (
         <FlatList
@@ -201,6 +204,12 @@ const SearchScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   searchbox: {
     borderColor: "#ccc",
     borderWidth: 1,

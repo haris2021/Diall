@@ -5,6 +5,7 @@ import { Video } from "expo-av";
 import * as Progress from "react-native-progress";
 
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const SingleReel = ({ item }) => {
   const windowWidth = Dimensions.get("window").width;
@@ -40,99 +41,103 @@ const SingleReel = ({ item }) => {
   };
 
   return (
-    <View
-      style={{
-        width: windowWidth,
-        height: windowHeight - 10,
-        position: "relative",
-      }}
-    >
-      <TouchableOpacity onPress={() => setplay(!play)}>
-        <Video
-          ref={videoRef}
-          resizeMode="cover"
-          isLooping
-          onBuffer={onBuffer}
-          onError={onError}
-          shouldPlay={play}
-          source={item.video}
-          style={{
-            width: "100%",
-            height: windowHeight - 200,
-          }}
-        />
-      </TouchableOpacity>
+    <SafeAreaView>
+      <View
+        style={{
+          width: windowWidth,
+          height: windowHeight,
+          position: "relative",
+        }}
+      >
+        <TouchableOpacity onPress={() => setplay(!play)}>
+          <Video
+            ref={videoRef}
+            resizeMode="cover"
+            isLooping
+            onBuffer={onBuffer}
+            onError={onError}
+            shouldPlay={play}
+            source={item.video}
+            style={{
+              width: "100%",
+              height: windowHeight - 200,
+            }}
+          />
+        </TouchableOpacity>
 
-      {!play && (
-        <View
-          style={{
-            position: "absolute",
-            top: "45%",
-            left: "45%",
-            borderRadius: 10,
-            backgroundColor: "rgba(52,52,52,0.1)",
-          }}
-        >
-          <Ionicons name="md-pause" size={45} color="black" />
-        </View>
-      )}
+        {!play && (
+          <View
+            style={{
+              position: "absolute",
+              top: "35%",
+              left: "45%",
+              borderRadius: 10,
+              backgroundColor: "rgba(52,52,52,0.1)",
+            }}
+          >
+            <Ionicons name="md-pause" size={45} color="black" />
+          </View>
+        )}
 
-      <View>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            bottom: 100,
-          }}
-        >
-          <View>
-            <View style={{ display: "flex", flexDirection: "row", left: 25 }}>
-              <Text style={{ fontSize: 19, color: "blue", fontWeight: "bold" }}>
-                @ {item.username}
-              </Text>
-              <Ionicons
-                name="ios-checkmark-circle-outline"
-                size={19}
-                color="lightblue"
-                style={{ left: 10 }}
-              />
-            </View>
-
+        <View>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              bottom: 100,
+            }}
+          >
             <View>
-              <Text style={{ fontSize: 17, left: 25, color: "white" }}>
-                {" "}
-                {item.description}
-              </Text>
+              <View style={{ display: "flex", flexDirection: "row", left: 25 }}>
+                <Text
+                  style={{ fontSize: 19, color: "blue", fontWeight: "bold" }}
+                >
+                  @ {item.username}
+                </Text>
+                <Ionicons
+                  name="ios-checkmark-circle-outline"
+                  size={19}
+                  color="lightblue"
+                  style={{ left: 10 }}
+                />
+              </View>
+
+              <View>
+                <Text style={{ fontSize: 17, left: 25, color: "white" }}>
+                  {" "}
+                  {item.description}
+                </Text>
+              </View>
             </View>
-          </View>
 
-          <View style={{ position: "absolute", right: 10 }}>
-            <TouchableOpacity onPress={handleIconClick}>
-              <Ionicons
-                name="share" // The name of the icon you want to use
-                size={30} // Size of the icon
-                color="white" // Color of the icon
+            <View style={{ position: "absolute", right: 10 }}>
+              <TouchableOpacity onPress={() => handleIconClick()}>
+                <Ionicons
+                  name="share" // The name of the icon you want to use
+                  size={30} // Size of the icon
+                  color="white" // Color of the icon
+                />
+              </TouchableOpacity>
+            </View>
+
+            <View style={{}}>
+              <Progress.Bar
+                progress={0.5}
+                width={440}
+                style={{
+                  justifyContent: "flex-start",
+                  display: "flex",
+                  marginTop: 81,
+                  marginLeft: -90, // wrong
+                }}
               />
-            </TouchableOpacity>
-          </View>
-
-          <View style={{}}>
-            <Progress.Bar
-              progress={0.5}
-              width={440}
-              style={{
-                justifyContent: "flex-start",
-                display: "flex",
-                marginTop: 81,
-                marginLeft: -70, // wrong
-              }}
-            />
+            </View>
           </View>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
